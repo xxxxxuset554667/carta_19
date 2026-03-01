@@ -30,9 +30,10 @@ body {
     cursor: pointer;
     overflow: hidden;
     box-shadow: 0 8px 20px rgba(0,0,0,0.15);
+    -webkit-tap-highlight-color: transparent; /* Evita brillo azul en iOS */
 }
 
-/* TAPA (SIN 3D, solo rotación simple) */
+/* TAPA */
 .flap {
     position: absolute;
     top: 0;
@@ -41,12 +42,14 @@ body {
     height: 110px;
     background: #3bb69a;
 
-    /* Triángulo clásico compatible */
+    /* Compatibilidad Safari */
+    -webkit-clip-path: polygon(0 0, 100% 0, 50% 100%);
     clip-path: polygon(0 0, 100% 0, 50% 100%);
 
     transform-origin: top center;
     transition: transform 0.6s ease;
     z-index: 3;
+    backface-visibility: hidden; /* Evita glitches en iOS */
 }
 
 /* CARTA */
@@ -79,7 +82,7 @@ body {
 
 /* ESTADO ABIERTO */
 .envelope.open .flap {
-    transform: rotate(180deg);
+    transform: rotateX(180deg);
 }
 
 .envelope.open .letter {
