@@ -1,40 +1,14 @@
 const envelope = document.getElementById("envelope");
-const letterImg = document.querySelector('.letter img');
 
-envelope.addEventListener('click', function () {
+function toggleEnvelope() {
+    envelope.classList.toggle("open");
+}
 
-    envelope.classList.toggle('open');
+// Soporte click (desktop)
+envelope.addEventListener("click", toggleEnvelope);
 
-    if (!letterImg) return;
-
-    if (!envelope.classList.contains('open')) {
-        letterImg.classList.remove('large');
-        return;
-    }
-
-    const highRes = letterImg.dataset.highres || 'carta.jpeg';
-
-    if (letterImg.dataset.loaded === 'true') {
-        letterImg.classList.add('large');
-        return;
-    }
-
-    const pre = new Image();
-
-    pre.onload = function () {
-        letterImg.src = highRes;
-        letterImg.dataset.loaded = 'true';
-        letterImg.classList.add('large');
-        letterImg.style.opacity = '1';
-    };
-
-    pre.onerror = function () {
-        letterImg.src = highRes;
-        letterImg.dataset.loaded = 'true';
-        letterImg.classList.add('large');
-        letterImg.style.opacity = '1';
-    };
-
-    pre.src = highRes;
-});es;
+// Soporte touch (iPhone)
+envelope.addEventListener("touchstart", function(e){
+    e.preventDefault();
+    toggleEnvelope();
 });
