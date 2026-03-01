@@ -1,6 +1,10 @@
-body {
+html, body {
     margin: 0;
-    height: 100vh;
+    padding: 0;
+    height: 100%;
+}
+
+body {
     background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
     display: flex;
     justify-content: center;
@@ -8,27 +12,27 @@ body {
     font-family: 'Times New Roman', serif;
 }
 
+/* CONTENEDOR */
 .container {
-    perspective: 1000px;
-    -webkit-perspective: 1000px;
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
+/* SOBRE */
 .envelope {
     position: relative;
     width: 320px;
     height: 220px;
     background: linear-gradient(135deg, #7fe8c9, #5ee3c6);
-    border-radius: 18px;
+    border-radius: 16px;
     cursor: pointer;
     overflow: hidden;
-    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
-
-    transform-style: preserve-3d;
-    -webkit-transform-style: preserve-3d;
+    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
-/* ================= TAPA ================= */
-
+/* TAPA (SIN 3D, solo rotación simple) */
 .flap {
     position: absolute;
     top: 0;
@@ -36,113 +40,61 @@ body {
     width: 100%;
     height: 110px;
     background: #3bb69a;
+
+    /* Triángulo clásico compatible */
     clip-path: polygon(0 0, 100% 0, 50% 100%);
 
-    transform-origin: top;
-    -webkit-transform-origin: top;
-
-    transform-style: preserve-3d;
-    -webkit-transform-style: preserve-3d;
-
-    backface-visibility: hidden;
-    -webkit-backface-visibility: hidden;
-
-    transform: rotateX(0deg) translateZ(0);
-    -webkit-transform: rotateX(0deg) translateZ(0);
-
+    transform-origin: top center;
     transition: transform 0.6s ease;
-    -webkit-transition: -webkit-transform 0.6s ease;
-
     z-index: 3;
 }
 
-/* ================= CARTA ================= */
-
+/* CARTA */
 .letter {
     position: absolute;
     bottom: 0;
     left: 50%;
     width: 90%;
     max-width: 300px;
-    height: 200px;
     background: white;
-    padding: 12px;
-    box-sizing: border-box;
+    padding: 10px;
     border-radius: 12px;
+    box-sizing: border-box;
+
+    transform: translate(-50%, 100%);
+    transition: transform 0.8s ease 0.4s;
 
     display: flex;
-    align-items: center;
     justify-content: center;
-
-    transform: translate(-50%, 100%) translateZ(0);
-    -webkit-transform: translate(-50%, 100%) translateZ(0);
-
-    transition: transform 0.8s ease 0.6s;
-
-    transform-style: preserve-3d;
-    -webkit-transform-style: preserve-3d;
-
-    will-change: transform;
-
-    z-index: 1;
+    align-items: center;
 }
-
-/* Imagen */
 
 .letter img {
     width: 100%;
-    max-width: 280px;
     height: auto;
     border-radius: 12px;
-    object-fit: contain;
-
-    opacity: 0;
-
-    transition: opacity 0.28s ease,
-                transform 0.35s ease;
-
     display: block;
+    transition: transform 0.4s ease;
 }
 
-/* ================= ESTADO ABIERTO ================= */
-
+/* ESTADO ABIERTO */
 .envelope.open .flap {
-    transform: rotateX(-180deg) translateZ(0);
-    -webkit-transform: rotateX(-180deg) translateZ(0);
+    transform: rotate(180deg);
 }
 
 .envelope.open .letter {
-    transform: translate(-50%, -40px) translateZ(0);
-    -webkit-transform: translate(-50%, -40px) translateZ(0);
-    z-index: 5;
+    transform: translate(-50%, -30px);
 }
 
-.envelope.open {
-    overflow: visible;
-}
-
+/* IMAGEN MÁS GRANDE */
 .envelope.open .letter img {
-    opacity: 1;
+    transform: scale(1.1);
 }
 
-/* Imagen expandida */
-
-.letter img.large {
-    transform: translateY(-22px) scale(1.14);
-    -webkit-transform: translateY(-22px) scale(1.14);
-    position: relative;
-    z-index: 6;
-}
-
-/* Responsive iPhone */
-
+/* Responsive */
 @media (max-width: 420px) {
     .envelope {
         width: 90vw;
-        height: auto;
-    }
-
-    .letter {
-        height: auto;
+        height: 200px;
     }
 }
