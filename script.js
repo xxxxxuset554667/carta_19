@@ -1,14 +1,21 @@
-const envelope = document.getElementById("envelope");
+document.addEventListener("DOMContentLoaded", function() {
 
-function toggleEnvelope() {
-    envelope.classList.toggle("open");
-}
+    const envelope = document.getElementById("envelope");
 
-// Soporte click (desktop)
-envelope.addEventListener("click", toggleEnvelope);
+    function toggleEnvelope() {
+        envelope.classList.toggle("open");
+    }
 
-// Soporte touch (iPhone)
-envelope.addEventListener("touchstart", function(e){
-    e.preventDefault();
-    toggleEnvelope();
+    // Evento click (desktop)
+    envelope.addEventListener("click", function(e) {
+        e.stopPropagation();
+        toggleEnvelope();
+    });
+
+    // Evento touch (iPhone)
+    envelope.addEventListener("touchstart", function(e) {
+        e.preventDefault(); 
+        toggleEnvelope();
+    }, { passive: false });
+
 });
