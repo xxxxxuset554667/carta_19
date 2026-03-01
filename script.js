@@ -6,6 +6,13 @@ document.addEventListener("DOMContentLoaded", function() {
     function toggleEnvelope() {
         envelope.classList.toggle("open");
         letter.classList.toggle("show");
+
+        // Bloquear scroll cuando la carta esté abierta
+        if (letter.classList.contains("show")) {
+            document.body.style.overflow = "hidden";
+        } else {
+            document.body.style.overflow = "auto";
+        }
     }
 
     envelope.addEventListener("click", function(e) {
