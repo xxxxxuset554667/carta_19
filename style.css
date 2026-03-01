@@ -10,11 +10,11 @@ body {
     justify-content: center;
     align-items: center;
     font-family: 'Times New Roman', serif;
+    perspective: 1000px; /* profundidad real */
 }
 
 /* CONTENEDOR */
 .container {
-    width: 100%;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -23,14 +23,14 @@ body {
 /* SOBRE */
 .envelope {
     position: relative;
-    width: 320px;
-    aspect-ratio: 4 / 3; /* mantiene proporción correcta */
+    width: 300px; /* menos ancho */
+    height: 220px;
     background: linear-gradient(135deg, #7fe8c9, #5ee3c6);
     border-radius: 16px;
     cursor: pointer;
-    box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    overflow: visible; /* permite que la carta salga completa */
+    box-shadow: 0 15px 30px rgba(0,0,0,0.25);
     -webkit-tap-highlight-color: transparent;
+    transform-style: preserve-3d;
 }
 
 /* TAPA */
@@ -45,26 +45,22 @@ body {
     -webkit-clip-path: polygon(0 0, 100% 0, 50% 100%);
     clip-path: polygon(0 0, 100% 0, 50% 100%);
 
-    transform-origin: top center;
-    transition: transform 0.6s ease;
-    z-index: 3;
+    transform-origin: top;
+    transition: transform 0.8s ease;
     backface-visibility: hidden;
 }
 
-/* CARTA */
+/* CARTA (inicialmente oculta) */
 .letter {
-    position: absolute;
-    bottom: 0;
+    position: fixed;
+    top: 50%;
     left: 50%;
     width: 90%;
-    background: white;
-    padding: 12px;
-    border-radius: 12px;
-    box-sizing: border-box;
-
-    transform: translate(-50%, 100%);
-    transition: transform 0.8s ease 0.4s;
-
+    max-width: 400px;
+    transform: translate(-50%, -50%) scale(0.5);
+    opacity: 0;
+    transition: all 0.6s ease;
+    z-index: 10;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -73,29 +69,25 @@ body {
 .letter img {
     width: 100%;
     height: auto;
-    border-radius: 12px;
-    display: block;
-    transition: transform 0.4s ease;
+    border-radius: 16px;
+    box-shadow: 0 20px 40px rgba(0,0,0,0.35);
 }
 
-/* ESTADO ABIERTO */
+/* SOBRE ABIERTO */
 .envelope.open .flap {
     transform: rotateX(180deg);
 }
 
-.envelope.open .letter {
-    transform: translate(-50%, -110%);
-}
-
-/* IMAGEN MÁS GRANDE */
-.envelope.open .letter img {
-    transform: scale(1.05);
+/* CARTA VISIBLE */
+.letter.show {
+    transform: translate(-50%, -50%) scale(1);
+    opacity: 1;
 }
 
 /* RESPONSIVE */
 @media (max-width: 420px) {
     .envelope {
-        width: 90vw;
-        max-width: 340px;
+        width: 260px;
+        height: 190px;
     }
 }
