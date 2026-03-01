@@ -24,13 +24,13 @@ body {
 .envelope {
     position: relative;
     width: 320px;
-    height: 220px;
+    aspect-ratio: 4 / 3; /* mantiene proporción correcta */
     background: linear-gradient(135deg, #7fe8c9, #5ee3c6);
     border-radius: 16px;
     cursor: pointer;
-    overflow: hidden;
     box-shadow: 0 8px 20px rgba(0,0,0,0.15);
-    -webkit-tap-highlight-color: transparent; /* Evita brillo azul en iOS */
+    overflow: visible; /* permite que la carta salga completa */
+    -webkit-tap-highlight-color: transparent;
 }
 
 /* TAPA */
@@ -39,17 +39,16 @@ body {
     top: 0;
     left: 0;
     width: 100%;
-    height: 110px;
+    height: 50%;
     background: #3bb69a;
 
-    /* Compatibilidad Safari */
     -webkit-clip-path: polygon(0 0, 100% 0, 50% 100%);
     clip-path: polygon(0 0, 100% 0, 50% 100%);
 
     transform-origin: top center;
     transition: transform 0.6s ease;
     z-index: 3;
-    backface-visibility: hidden; /* Evita glitches en iOS */
+    backface-visibility: hidden;
 }
 
 /* CARTA */
@@ -58,9 +57,8 @@ body {
     bottom: 0;
     left: 50%;
     width: 90%;
-    max-width: 300px;
     background: white;
-    padding: 10px;
+    padding: 12px;
     border-radius: 12px;
     box-sizing: border-box;
 
@@ -86,18 +84,18 @@ body {
 }
 
 .envelope.open .letter {
-    transform: translate(-50%, -30px);
+    transform: translate(-50%, -110%);
 }
 
 /* IMAGEN MÁS GRANDE */
 .envelope.open .letter img {
-    transform: scale(1.1);
+    transform: scale(1.05);
 }
 
-/* Responsive */
+/* RESPONSIVE */
 @media (max-width: 420px) {
     .envelope {
         width: 90vw;
-        height: 200px;
+        max-width: 340px;
     }
 }
