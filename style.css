@@ -1,0 +1,120 @@
+body {
+    margin: 0;
+    height: 100vh;
+    background: linear-gradient(135deg, #fbc2eb, #a6c1ee);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-family: 'Times New Roman', serif;
+}
+
+.container {
+    perspective: 1000px;
+}
+
+.envelope {
+    position: relative;
+    width: 320px;
+    height: 220px;
+    /* aquamarine / mint gradient */
+    background: linear-gradient(135deg, #7fe8c9, #5ee3c6);
+    border-radius: 18px;
+    cursor: pointer;
+    overflow: hidden; /* CLAVE: oculta la carta */
+    box-shadow: 0 8px 24px rgba(0,0,0,0.12);
+}
+
+/* TAPA */
+.flap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 110px;
+    background: #3bb69a; /* darker mint for flap */
+    clip-path: polygon(0 0, 100% 0, 50% 100%);
+    transform-origin: top;
+    transition: transform 0.6s ease;
+    z-index: 3; /* Encima de todo */
+}
+
+/* CARTA */
+/* letter positioned and centered inside the envelope. use translateX to keep it
+   centered regardless of the envelope's width and add a bit of responsiveness.
+   also allow the size of the element to scale on smaller screens. */
+.letter {
+    position: absolute;
+    bottom: 0;
+    left: 50%;                    /* center horizontally */
+    width: 90%;                   /* responsive width (90% of envelope) */
+    max-width: 300px;             /* keep original maximum */
+    height: 200px;
+    background: white;
+    padding: 12px;
+    box-sizing: border-box;
+    transform: translate(-50%, 100%); /* hide below until opened */
+    transition: transform 0.8s ease 0.6s; /* carta aparece después de abrir tapa */
+    z-index: 1;
+    display: flex;
+    align-items: center; /* center image vertically */
+    justify-content: center; /* center image horizontally */
+    border-radius: 12px;
+    overflow: visible; /* allow image to overflow when expanded */
+}
+
+/* make image fill the available width and keep aspect ratio; add a little
+   padding so it doesn't touch edges and looks nicer on narrow devices. */
+.letter img {
+    width: 100%;
+    max-width: 280px;
+    height: auto;
+    margin: 0;
+    border-radius: 12px;
+    object-fit: contain;
+    transition: transform 0.35s ease, width 0.35s ease;
+    display: block;
+    opacity: 0; /* hide placeholder until image is loaded/opened */
+    transition: opacity 0.28s ease, transform 0.35s ease, width 0.35s ease;
+}
+
+/* ESTADO ABIERTO */
+.envelope.open .flap {
+    transform: rotateX(180deg);
+}
+
+.envelope.open .letter {
+    transform: translate(-50%, -40px);
+    z-index: 5; /* bring the letter above the flap when opened */
+}
+
+/* allow the letter image to overflow the envelope when opened so it can
+   appear larger above the envelope */
+.envelope.open {
+    overflow: visible;
+}
+
+/* expanded image state: a bit larger, lifted above the letter to look
+   like the letter is bigger and sitting above the envelope */
+.letter img.large {
+    /* enlarge slightly and lift above the envelope */
+    transform: translateY(-22px) scale(1.14);
+    max-width: none;
+    position: relative;
+    z-index: 6; /* above the flap */
+}
+
+/* when envelope is opened, make the image visible (if loaded) */
+.envelope.open .letter img {
+    opacity: 1;
+}
+
+/* responsive tweaks for small viewports (iPhone 13 ~390px width) */
+@media (max-width: 420px) {
+    .envelope {
+        width: 90vw;
+        height: auto;
+    }
+    .letter {
+        height: auto;
+    }
+}
